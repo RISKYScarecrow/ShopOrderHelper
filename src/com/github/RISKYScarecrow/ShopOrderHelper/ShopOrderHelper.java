@@ -22,18 +22,9 @@ public class ShopOrderHelper {
 			
 			
 			robot.delay(5000);
-			/*
-			robot.keyUse(KeyEvent.VK_H);
-			robot.keyUse(KeyEvent.VK_I);
-			robot.keyUse(KeyEvent.VK_SPACE);
-			robot.keyUse(KeyEvent.VK_B);
-			robot.keyUse(KeyEvent.VK_U);
-			robot.keyUse(KeyEvent.VK_D);
-			robot.keyUse(KeyEvent.VK_D);
-			robot.keyUse(KeyEvent.VK_Y);
-			*/
+
 			
-			robot.moveSelect(500, 40);
+			robot.moveSelect2(170, 40);
 			
 			System.out.println(robot.readSelected());
 			
@@ -43,3 +34,79 @@ public class ShopOrderHelper {
 	}
 
 }
+/* Server code for push and pull
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
+
+public class SimpleServer extends Thread
+{
+	private ServerSocket serverSocket;
+
+	public SimpleServer(int port) throws IOException
+	{
+		serverSocket = new ServerSocket(port);
+		serverSocket.setSoTimeout(10000);
+	}
+
+	public void run()
+	{
+		while (true)
+		{
+			try
+			{
+				System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "...");
+				Socket server = serverSocket.accept();
+				System.out.println("Just connected to " + server.getRemoteSocketAddress());
+				DataInputStream in = new DataInputStream(server.getInputStream());
+				System.out.println(in.readUTF());
+				DataOutputStream out = new DataOutputStream(server.getOutputStream());
+				out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress());
+				for (int i = 0; i < 10; i++)
+				{
+					out.writeUTF("Iteration " + i);
+					try
+					{
+						Thread.sleep(100);
+					}
+					catch (InterruptedException e)
+					{
+						e.printStackTrace();
+					}
+				}
+				out.writeUTF("Goodbye!");
+				out.writeUTF("Kill connection");
+				server.close();
+			}
+			catch (SocketTimeoutException s)
+			{
+				System.out.println("Socket timed out!");
+				break;
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+				break;
+			}
+		}
+		System.out.println("End!");
+	}
+
+	public static void main(String[] args)
+	{
+		int port = Integer.parseInt(args[0]);
+		try
+		{
+			Thread t = new SimpleServer(port);
+			t.start();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+}
+*/
