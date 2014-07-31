@@ -10,40 +10,35 @@ import java.io.IOException;
 
 public class ExtendedRobot extends Robot
 {
-
+	int delayLength;
+	
 	public ExtendedRobot() throws AWTException
 	{
 		super();
+		delayLength = 10;
+	}
+	public ExtendedRobot(int delayLength)throws AWTException
+	{
+		super();
+		this.delayLength = delayLength;
 	}
 
 	public void keyUse(int keyCode)
 	{
 		keyPress(keyCode);
-		delay(50);
+		
+		delay(delayLength);
+		
 		keyRelease(keyCode);
 	}
 
 	public void moveSelect(int _x, int _y)
 	{
 		mouseMove(_x, _y);
+		delay(delayLength);
 		mousePress(InputEvent.BUTTON1_DOWN_MASK);
-		delay(10);
+		delay(delayLength);
 		mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-
-		keyPress(KeyEvent.VK_CONTROL);
-		keyUse(KeyEvent.VK_A);
-		keyRelease(KeyEvent.VK_CONTROL);
-	}
-
-	public void moveSelect2(int _x, int _y)
-	{
-		mouseMove(_x, _y);
-		delay(10);
-		mousePress(InputEvent.BUTTON1_DOWN_MASK);
-		delay(10);
-		mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-
-
 
 		boolean on = false;
 		if (ShopOrderHelper.toolkit.getLockingKeyState(KeyEvent.VK_NUM_LOCK))
@@ -53,11 +48,11 @@ public class ExtendedRobot extends Robot
 		}
 
 		keyUse(KeyEvent.VK_HOME);
-		delay(10);
+		delay(delayLength);
 		keyPress(KeyEvent.VK_SHIFT);
-		delay(10);
+		delay(delayLength);
 		keyUse(KeyEvent.VK_END);
-		delay(10);
+		delay(delayLength);
 		keyRelease(KeyEvent.VK_SHIFT);
 
 		if (on)
@@ -65,14 +60,27 @@ public class ExtendedRobot extends Robot
 			keyUse(KeyEvent.VK_NUM_LOCK);
 			on = false;
 		}
+	}
 
+	public void moveSelect2(int _x, int _y)
+	{
+		mouseMove(_x, _y);
+		mousePress(InputEvent.BUTTON1_DOWN_MASK);
+		delay(delayLength);
+		mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+
+		keyPress(KeyEvent.VK_CONTROL);
+		keyUse(KeyEvent.VK_A);
+		keyRelease(KeyEvent.VK_CONTROL);
 	}
 
 	public String readSelected()
 	{
 		keyPress(KeyEvent.VK_CONTROL);
+		delay(delayLength);
 		keyUse(KeyEvent.VK_C);
 		keyRelease(KeyEvent.VK_CONTROL);
+		delay(delayLength*3);
 
 		String result = null;
 
@@ -88,7 +96,7 @@ public class ExtendedRobot extends Robot
 		{
 			e.printStackTrace();
 		}
-
 		return result;
 	}
+
 }
