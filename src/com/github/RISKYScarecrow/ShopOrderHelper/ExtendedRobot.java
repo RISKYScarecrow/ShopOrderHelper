@@ -8,16 +8,19 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
+import javax.swing.KeyStroke;
+
 public class ExtendedRobot extends Robot
 {
 	int delayLength;
-	
+
 	public ExtendedRobot() throws AWTException
 	{
 		super();
-		delayLength = 10;
+		delayLength = 40;
 	}
-	public ExtendedRobot(int delayLength)throws AWTException
+
+	public ExtendedRobot(int delayLength) throws AWTException
 	{
 		super();
 		this.delayLength = delayLength;
@@ -26,9 +29,9 @@ public class ExtendedRobot extends Robot
 	public void keyUse(int keyCode)
 	{
 		keyPress(keyCode);
-		
+
 		delay(delayLength);
-		
+
 		keyRelease(keyCode);
 	}
 
@@ -76,11 +79,12 @@ public class ExtendedRobot extends Robot
 
 	public String readSelected()
 	{
+		delay(delayLength*5);
 		keyPress(KeyEvent.VK_CONTROL);
 		delay(delayLength);
 		keyUse(KeyEvent.VK_C);
 		keyRelease(KeyEvent.VK_CONTROL);
-		delay(delayLength*3);
+		delay(delayLength * 3);
 
 		String result = null;
 
@@ -91,12 +95,55 @@ public class ExtendedRobot extends Robot
 		catch (UnsupportedFlavorException e)
 		{
 			e.printStackTrace();
+			System.out.println("UnsupportedFlavorException");
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
+			System.out.println("IOException");
 		}
 		return result;
+	}
+
+	public void typeString(String s)
+	{
+		for (int i = 0; i < s.length(); i++)
+		{
+			boolean upper = Character.isUpperCase(s.charAt(i));
+			char c = s.charAt(i);
+			if (upper)
+			{
+				keyPress(KeyEvent.VK_SHIFT);
+			}
+			
+			KeyStroke key = KeyStroke.getKeyStroke("pressed " + Character.toUpperCase(c) );
+			
+			keyUse(key.getKeyCode());
+			
+			if(upper)
+			{
+				keyRelease(KeyEvent.VK_SHIFT);
+			}
+		}
+
+	}
+
+	public void switchTab(int i)
+	{
+		if (i > 6 || i < 1)
+		{
+			return;
+		}
+		String str = Integer.toString(i);
+		keyCommand(str);
+	}
+	
+	public void keyCommand(String str)
+	{
+		keyPress(KeyEvent.VK_ALT);
+		typeString(str);
+		keyRelease(KeyEvent.VK_ALT);
+		
 	}
 
 }
