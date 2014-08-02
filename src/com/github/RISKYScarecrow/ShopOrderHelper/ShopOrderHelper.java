@@ -14,9 +14,9 @@ public class ShopOrderHelper
 	public static void main(String[] args) throws AWTException
 	{
 
-		//GUI myGUI = new GUI();
-		//Thread gui = myGUI;
-		//gui.start();
+		GUI myGUI = new GUI();
+		Thread gui = myGUI;
+		gui.start();
 		
 		
 		
@@ -29,10 +29,7 @@ public class ShopOrderHelper
 		StockHolder stock = new StockHolder("902166");
 		stock.getData();
 		
-		//robot.moveSelect2(170, 40);
-		//String m = robot.readSelected();
-		//System.out.println(m);
-		//myGUI.updateLabel(m);
+		myGUI.updateLabel(stock.output());
 	}
 
 	

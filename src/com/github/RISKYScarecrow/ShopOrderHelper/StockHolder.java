@@ -26,6 +26,7 @@ public class StockHolder
 	public void getData()
 	{
 		dc.openProduct(barcode);
+		
 		if (nameBool)
 		{
 			nameStr = dc.getName();
@@ -51,5 +52,10 @@ public class StockHolder
 			SOHStr = dc.getStockOnHand();
 		}
 		dc.closeProduct();
+	}
+
+	public String output()
+	{
+		return "Name: " + nameStr + " plu: " + pluStr + " real: " + realStr + " retail: " + retailStr + " SOH: " + SOHStr;
 	}
 }

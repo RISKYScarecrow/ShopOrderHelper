@@ -146,4 +146,10 @@ public class ExtendedRobot extends Robot
 		
 	}
 
+	public void pressEnter()
+	{
+		delay(20);
+		keyUse(KeyEvent.VK_ENTER);
+	}
+
 }
